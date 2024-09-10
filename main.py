@@ -60,22 +60,6 @@ def show_current_place():
     '''Displays the current location in game_state'''
     return game_places[game_state]['Story']
 
-def game_play(action):
-    '''Updates the game state based on player action'''
-    global game_state
-
-    if action == 'North' or action == 'South':
-        next_place = game_places[game_state].get(action, '')
-        if next_place:
-            game_state = next_place
-            return f'Moving {action}...\n' + show_current_place()
-        else:
-            return f'You cant go {action} from here.'
-    elif action == 'Fight' and 'Fight' in game_places[game_state]:
-        '''Trigger Fight via the key in the dictionary'''
-        return initiate_fight()
-    return 'Invalid action.'
-
 def make_game_window():
     '''Creates the PySimplueGUI game window'''
     sg.theme('Dark Blue 3')
