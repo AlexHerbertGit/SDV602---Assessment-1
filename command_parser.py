@@ -10,14 +10,19 @@ class CommandParser:
         self.status = Status()
         self.fight = MonsterFight()
 
-    def parse(self, command, game_state):
+    def parse(self, command, game_state, game_places):
         '''Parse the command from user input to main and perform the appropriate action'''
         command = command.lower()
+        
         if 'north' in command or 'south' in command:
             return command.capitalize()
         
         elif 'fight' in command:
-            return self.fight.start_fight()
+            enemy_type = game_places[game_state].get('Enemy', None)
+            if enemy_type:
+                return self.fight.start_fight(enemy_type)
+            else:
+                return "There is no enemy here to fight."
         
         elif 'inventory' in command:
             return self.inventory.show_inventory()

@@ -2,12 +2,13 @@
 Import Modules
 """
 import PySimpleGUI as sg
-
+from command_parser import CommandParser
 
 """
 Initialize game state at starting point and other components
 """
 game_state = 'Village of Arion'
+parser = CommandParser()
 
 """
 Game Places with descriptions and connections
@@ -16,24 +17,38 @@ Game Places with descriptions and connections
 game_places = {
     'Village of Arion Part 1': {
         'Story': 'You are in the peaceful Village of Arion, the smell of fresh bread and the bustle of the market fills your senses with a feeling of comfort, then an old sage approaches. . . .',
-        'North': 'Whispering Forest', 'South': 'Temple of Ages', 'Image': 'village image'
+        'North': 'Whispering Forest', 
+        'South': 'Temple of Ages', 
+        'Image': 'village image',
+        'Enemy': None
     },
     'Village of Arion Part 2': {
         'Story': 'You have received the Sword of Arundil and Shield, paths out of the village lead North (Whispering Forest) and South (Temple of Ages).',
-        'North': 'Whispering Forest Part 1', 'South': 'Village of Arion', 'Image': 'village of arion image'
+        'North': 'Whispering Forest Part 1', 
+        'South': 'Village of Arion', 
+        'Image': 'village of arion image',
+        'Enemy': None
     },
     'Whispering Forest Part 1': {
         'Story': 'You arrive at the overgrown entrance to the Whispering Forest. Paths lead to the north (Deeper into the forest) and south (Village of Arion).',
-        'North': 'Whsipering Forest Part 2', 'South': 'Village of Arion', 'Image': 'whispering_forest_image_1'
+        'North': 'Whsipering Forest Part 2', 
+        'South': 'Village of Arion', 
+        'Image': 'whispering_forest_image_1',
+        'Enemy': None
     },
     'Whispering Forest Part 2': {
-        'Story': 'You venture deeper into the Whispering Forest, a shadowy figure lurks in the distance, you clear some vegetation out of the way and can continue further north.',
-        'North': 'Whispering Forest Part 3', 'South': 'Whispering Forest Part 1', 'Image': 'whispering_forest_image_2'
+        'Story': 'You venture deeper into the Whispering Forest, a shadowy figure lurks in the distance, you clear some vegetation out of the way and can continue further north (Heart of the Forest) or south (Back towards Village of Arion).',
+        'North': 'Whispering Forest Part 3', 
+        'South': 'Whispering Forest Part 1', 
+        'Image': 'whispering_forest_image_2',
+        'Enemy': None
     },
     'Whispering Forest Part 3': {
         'Story': 'You have reached the heart of the Whispering Forest. Strange creatures can be heard in the darkness, then out of the trees, a Dark Rider Approaches. Prepare to Fight!',
         'Fight': 'initiate_fight', 
-        'South': 'Whispering Forest Part 2', 'Image': 'whispering_forest_image_3'
+        'South': 'Whispering Forest Part 2', 
+        'Image': 'whispering_forest_image_3',
+        'Enemy': 'Dark Rider'
     },
 }
 
@@ -88,15 +103,8 @@ def main():
             break
         elif event == 'Submit':
             user_input = values['-IN-']
-            '''User input processing'''
-            if 'north' in user_input.lower():
-                output = game_play('North')
-            elif 'south' in user_input.lower():
-                output = game_play('South')
-            elif 'fight' in user_input.lower():
-                output = game_play('Fight')
-            else:
-                output = 'Unknown command!'
+            '''User input processing with parser'''
+            output = parser.parse(user_input, game_state, game_places)
 
             '''Update the game display'''
             window['-OUTPUT-'].update(output)
@@ -104,3 +112,5 @@ def main():
 
     window.close()
 
+if __name__ == '__main__':
+    main()
