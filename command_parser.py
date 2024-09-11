@@ -5,44 +5,41 @@ from inventory import Inventory
 from inventory import Item
 
 class CommandParser:
-    def __init__(self, inventory):
+    def __init__(self, inventory, status):
         self.inventory = inventory
+        self.status = status
         self.fight = MonsterFight(inventory)
 
-    def parse(self, command, game_state, game_places):
+    def parse(self, command, game_places):
         '''Parse the command from user input to main and perform the appropriate action'''
         command = command.lower()
 
         '''Handle Sage quest at beginning of game'''
-        if game_state == 'Village of Arion Part 1' and 'speak to sage' in command:
-            game_state = game_places[game_state].get('Speak to Sage', None)
-            return game_places[game_state]['Story'], game_state
+        if 'speak to sage' in command and self.status.get_state() == 'Village of Arion Part 1':
+            story, image = self.status.update_state('Speak to Sage')
+            return story, image
         
         '''Handle Begin Quest after speaking to sage'''
-        if game_state == 'Sage Quest' and 'begin quest' in command:
-            '''Give Player sword of arundil and shield when beginning quest'''
+        if 'begin quest' in command and self.status.get_state() == 'Sage Quest':
             sword_of_arundil = Item('Sword of Arundil', 50)
             shield = Item('Shield', 40)
             self.inventory.add_item(sword_of_arundil)
             self.inventory.add_item(shield)
-            game_state = game_places[game_state].get('Begin Quest', None)
-            return f'The sage has given you the Sword of Arundil and Shield.', game_state
-
+            story, image = self.status.update_state('Begin Quest')
+            return story, image 
+        
         if 'north' in command or 'south' in command:
-            return command.capitalize(), game_state
-        
-        elif 'speak to sage' in command:
-            return command.capitalize(), game_state
-        
-        elif 'fight' in command:
-            enemy_type = game_places[game_state].get('Enemy', None)
+            story, image = self.status.update_state(command.capitalize())
+            return story, image
+
+        if 'fight' in command:
+            enemy_type = self.status.game_places[self.status.get_state()].get('Enemy', None)
             if enemy_type:
-                return self.fight.start_fight(enemy_type), game_state
+                return self.fight.start_fight(enemy_type), None
             else:
-                return "There is no enemy here to fight.", game_state
-        
-        elif 'inventory' in command:
-            return self.inventory.show_inventory(), game_state
-        
-        else:
-            return "Unknown Command!", game_state
+                return "There is no enemy here to fight.", None
+
+        if 'inventory' in command:
+            return self.inventory.show_inventory(), None
+
+        return "Unknown Command!", None
