@@ -8,13 +8,13 @@ from inventory import Inventory, Item
 """
 Initialize game state at starting point and other components
 """
-game_state = 'Village of Arion'
-parser = CommandParser()
+inventory = Inventory()
+game_state = 'Village of Arion Part 1'
+parser = CommandParser(inventory)
 
 """
-Initialize Inventory and Game Items
+Initialize Game Items
 """
-inventory = Inventory()
 
 health_elixir = Item('Health Elixir', 30)
 sacred_relic = Item('Sacred Relic', 1)
@@ -29,7 +29,7 @@ game_places = {
         'North': '', 
         'South': '', 
         'Speak to Sage': 'Sage Quest',
-        'Image': 'village image',
+        'Image': 'images/village_of_arion_pt1.png',
         'Enemy': None
     },
     'Sage Quest': {
@@ -37,35 +37,35 @@ game_places = {
         'North': '', 
         'South': '',
         'Begin Quest': 'Village of Arion Part 2',
-        'Image': 'village of arion image',
+        'Image': 'images/sage_quest.png',
         'Enemy': None
     },
     'Village of Arion Part 2': {
         'Story': 'You have received the Sword of Arundil and Shield, paths out of the village lead North (Whispering Forest) and South (Temple of Ages).',
         'North': 'Whispering Forest Part 1', 
         'South': 'Temple of Ages', 
-        'Image': 'village of arion image',
+        'Image': 'images/village_of_arion_pt2.png',
         'Enemy': None
     },
     'Whispering Forest Part 1': {
         'Story': 'You arrive at the overgrown entrance to the Whispering Forest. Paths lead to the north (Deeper into the forest) and south (Village of Arion).',
         'North': 'Whsipering Forest Part 2', 
         'South': 'Village of Arion', 
-        'Image': 'whispering_forest_image_1',
+        'Image': 'images/whispering_forest_pt1.png',
         'Enemy': None
     },
     'Whispering Forest Part 2': {
         'Story': 'You venture deeper into the Whispering Forest, a shadowy figure lurks in the distance, you clear some vegetation out of the way and can continue further north (Heart of the Forest) or south (Back towards Village of Arion).',
         'North': 'Whispering Forest Part 3', 
         'South': 'Whispering Forest Part 1', 
-        'Image': 'whispering_forest_image_2',
+        'Image': 'images/whispering_forest_pt2.png',
         'Enemy': None
     },
     'Whispering Forest Part 3': {
         'Story': 'You have reached the heart of the Whispering Forest. Strange creatures can be heard in the darkness, then out of the trees, a Dark Rider Approaches. Prepare to Fight!',
         'Fight': 'initiate_fight', 
         'South': 'Whispering Forest Part 2', 
-        'Image': 'whispering_forest_image_3',
+        'Image': '.images/whispering_forest_pt3.png',
         'Enemy': 'Dark Rider'
     },
 }
@@ -85,17 +85,27 @@ def make_game_window():
     '''Get the image from the game_state location'''
     current_image = game_places[game_state]['Image']
 
-    '''Layout for game window'''
-    layout = [
-        [sg.Image(current_image, size=(100, 100), key='-IMG-')],
-        [sg.Text(show_current_place(), size=(40, 5), key='-OUTPUT-')],
-        [sg.Input(key='-IN-', size=(20, 1))],
+
+    left_column = [
+        [sg.Image(filename=current_image, key='-IMG-', size=(700, 700))]
+    ]
+
+    right_column = [
+        [sg.Text(show_current_place(), size=(60, 10), key='-OUTPUT-')],
+        [sg.Input(key='-IN-', size=(40, 1))],
         [sg.Button('Submit'), sg.Button('Exit')]
     ]
 
-    return sg.Window('Legend of the Sacred Forest', layout)
+    '''Layout for game window'''
+    layout = [
+        [sg.Column(left_column), sg.Column(right_column)]
+    ]
+
+    
+    return sg.Window('Legend of the Sacred Forest', layout, size=(1280, 720), finalize=True)
 
 def main():
+
     '''Main game loop logic and window creation'''
     window = make_game_window()
 
@@ -110,7 +120,7 @@ def main():
 
             '''Update the game display'''
             window['-OUTPUT-'].update(output)
-            window['-IMG-'].update(game_places[game_state]['Image'])
+            window['-IMG-'].update(filename=game_places[game_state]['Image'])
 
     window.close()
 

@@ -1,15 +1,13 @@
 '''Command Parser Module'''
 
 from monster_fight import MonsterFight
-from status import Status
 from inventory import Inventory
 from inventory import Item
 
 class CommandParser:
     def __init__(self, inventory):
-        self.inventory = Inventory()
-        self.status = Status()
-        self.fight = MonsterFight()
+        self.inventory = inventory
+        self.fight = MonsterFight(inventory)
 
     def parse(self, command, game_state, game_places):
         '''Parse the command from user input to main and perform the appropriate action'''
@@ -17,7 +15,7 @@ class CommandParser:
 
         '''Handle Sage quest at beginning of game'''
         if game_state == 'Village of Arion Part 1' and 'speak to sage' in command:
-            game_state == game_places[game_state].get('Speak to Sage', None)
+            game_state = game_places[game_state].get('Speak to Sage', None)
             return game_places[game_state]['Story'], game_state
         
         '''Handle Begin Quest after speaking to sage'''
@@ -31,23 +29,20 @@ class CommandParser:
             return f'The sage has given you the Sword of Arundil and Shield.', game_state
 
         if 'north' in command or 'south' in command:
-            return command.capitalize()
+            return command.capitalize(), game_state
         
         elif 'speak to sage' in command:
-            return command.capitalize()
+            return command.capitalize(), game_state
         
         elif 'fight' in command:
             enemy_type = game_places[game_state].get('Enemy', None)
             if enemy_type:
-                return self.fight.start_fight(enemy_type)
+                return self.fight.start_fight(enemy_type), game_state
             else:
-                return "There is no enemy here to fight."
+                return "There is no enemy here to fight.", game_state
         
         elif 'inventory' in command:
-            return self.inventory.show_inventory()
-        
-        elif 'status' in command:
-            return self.status.show_status()
+            return self.inventory.show_inventory(), game_state
         
         else:
-            return "Unknown Command!"
+            return "Unknown Command!", game_state

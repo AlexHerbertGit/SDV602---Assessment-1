@@ -4,12 +4,12 @@ from random import randint
 from inventory import Inventory
 
 class MonsterFight:
-    def __init__(self):
+    def __init__(self, inventory):
         self.player_health = 100
         self.enemy_health = 0
         self.enemy_type = None
         self.in_fight = False
-        self.inventory = Inventory
+        self.inventory = inventory
 
     def start_fight(self, enemy_type):
         '''Initialize fight with specified enemy'''
@@ -59,7 +59,7 @@ class MonsterFight:
     
     def use_item(self, item_name):
         '''Use an item from the inventory'''
-        if item_name.lower() == 'health elixir' and 'Health Elixir' in self.inventory_items:
+        if item_name.lower() == 'health elixir' and 'Health Elixir' in self.inventory.items:
             self.player_health += 30
             self.inventory.remove_item('Health Elixir')
             return f'You used a Health Elixir and restored 30 health! Current Health: {self.player_health}'
