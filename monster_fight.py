@@ -16,11 +16,11 @@ class MonsterFight:
         self.enemy_type = enemy_type
 
         if enemy_type == 'Dark Rider':
-           enemy_health = 100
+           self.enemy_health = 100
         elif enemy_type == 'Boneguard':
-            enemy_health = 100
+            self.enemy_health = 100
         else:
-            enemy_health = 40
+            self.enemy_health = 40
 
         self.in_fight = True
         return f"a {enemy_type} apprears! Prepare to fight! Choose 'Attack' or 'Inventory."

@@ -50,7 +50,7 @@ game_places = {
     },
     'Whispering Forest Part 3': {
         'Story': 'You have reached the heart of the Whispering Forest. Strange creatures can be heard in the darkness, then out of the trees, a Dark Rider Approaches.',
-        'Fight': 'initiate_fight', 
+        'Fight': 'start_fight()', 
         'South': 'Whispering Forest Part 2', 
         'Image': 'images/whispering_forest_pt3.png',
         'Enemy': 'Dark Rider'
@@ -65,7 +65,7 @@ health_elixir = Item('Health Elixir', 30)
 sacred_relic = Item('Sacred Relic', 1)
 
 """
-Initialize game state at starting point and other components
+Initialize game status at starting point and other components
 """
 inventory = Inventory()
 status = Status('Village of Arion Part 1', game_places)
@@ -109,7 +109,7 @@ def main():
             user_input = values['-IN-']
             output, image = parser.parse(user_input, game_places)
 
-            # Update the game output and image
+            '''Update the game output and image'''
             window['-OUTPUT-'].update(output)
             if image:
                 window['-IMG-'].update(filename=image)

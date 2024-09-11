@@ -3,6 +3,7 @@
 from monster_fight import MonsterFight
 from inventory import Inventory
 from inventory import Item
+from status import Status
 
 class CommandParser:
     def __init__(self, inventory, status):
@@ -13,6 +14,7 @@ class CommandParser:
     def parse(self, command, game_places):
         '''Parse the command from user input to main and perform the appropriate action'''
         command = command.lower()
+        
 
         '''Handle Sage quest at beginning of game'''
         if 'speak to sage' in command and self.status.get_state() == 'Village of Arion Part 1':
@@ -38,6 +40,9 @@ class CommandParser:
                 return self.fight.start_fight(enemy_type), None
             else:
                 return "There is no enemy here to fight.", None
+            
+        if self.fight.in_fight:
+            return self.fight.fight_action(command), None
 
         if 'inventory' in command:
             return self.inventory.show_inventory(), None
