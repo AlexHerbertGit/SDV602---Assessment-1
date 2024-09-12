@@ -10,6 +10,7 @@ class CommandParser:
         self.inventory = inventory
         self.status = status
         self.fight = MonsterFight(inventory)
+        self.previous_state = None
 
     def parse(self, command, game_places):
         '''Parse the command from user input to main and perform the appropriate action'''
@@ -48,7 +49,7 @@ class CommandParser:
             current_scene = game_places[self.status.get_state()]
             if 'Pick Up' in current_scene:
                 item_name = current_scene['Pick Up']
-                new_item = Item(item_name, 1)
+                new_item = Item(item_name, 30)
                 self.inventory.add_item(new_item)
                 return f'You picked up {item_name} and added it to your inventory. ( type "continue" to go carry on with your quest" )', None
             else:
@@ -61,6 +62,13 @@ class CommandParser:
             return story, image
 
         if 'inventory' in command:
+            self.previous_state = self.status.get_state()
             return self.inventory.show_inventory(), None
+        
+        if 'close' in command:
+            self.status.game_state = self.previous_state 
+            self.previous_state = None  
+            story, image = self.status.get_current_scene()
+            return story, image 
 
         return "Unknown Command!", None

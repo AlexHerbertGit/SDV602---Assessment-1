@@ -12,7 +12,7 @@ Game Places with descriptions and connections to other locations/actions
 
 game_places = {
     'Village of Arion Part 1': {
-        'Story': 'You are in the peaceful Village of Arion, the smell of fresh bread and the bustle of the market fills your senses with a feeling of comfort, then an old sage approaches. . . .( type "speak to sage" )',
+        'Story': 'You are in the peaceful Village of Arion, the smell of fresh bread and the bustle of the market fills your senses with a feeling of comfort, then an old sage approaches. . . .\n( type "speak to sage" )',
         'North': '', 
         'South': '', 
         'Speak to Sage': 'Sage Quest',
@@ -20,7 +20,7 @@ game_places = {
         'Enemy': None
     },
     'Sage Quest': {
-        'Story': 'The sage says: "Hello young adventurer, Malakar has taken control of the land, it is up to you to save us from him. Take this Sword of Arundil and Shield to help you on your quest! ( type "begin quest" )',
+        'Story': 'The sage says: "Hello young adventurer, Malakar has taken control of the land, it is up to you to save us from him. Take this Sword of Arundil and Shield to help you on your quest! \n( type "begin quest" )',
         'North': '', 
         'South': '',
         'Begin Quest': 'Village of Arion Part 2',
@@ -49,7 +49,7 @@ game_places = {
         'Enemy': None
     },
     'Whispering Forest Part 3': {
-        'Story': 'You have reached the heart of the Whispering Forest. Strange creatures can be heard in the darkness, then out of the trees, a Dark Rider Approaches. ( type "fight" to start the battle )',
+        'Story': 'You have reached the heart of the Whispering Forest. Strange creatures can be heard in the darkness, then out of the trees, a Dark Rider Approaches. \n( type "fight" to start the battle )',
         'Fight': 'start_fight()', 
         'South': 'Whispering Forest Part 2', 
         'Image': 'images/whispering_forest_pt3.png',
@@ -57,7 +57,7 @@ game_places = {
         'Continue': 'Whispering Forest Part 4' 
     },
     'Whispering Forest Part 4': {
-        'Story': 'The Dark Rider falls to the ground, bursting into a cloud of dark smoke and vanishing. Once the smoke clears you see a glinting object on the ground. You walk over and pick it up ( type "pick up" to pick up the object )',
+        'Story': 'The Dark Rider falls to the ground, bursting into a cloud of dark smoke and vanishing. Once the smoke clears you see a glinting object on the ground. You walk over and pick it up \n( type "pick up" to pick up the object )',
         'North': '',
         'South': '',
         'Pick Up': 'Sacred Relic',
@@ -66,42 +66,42 @@ game_places = {
         'Enemy': None
     },
     'Village of Arion Part 3': {
-        'Story': 'You make your way out of the Whispering Forest and return to the Village of Arion, Time to visit the Temple of Ages to find the last Sacred Relic, ( type "south" to go to the Temple of Ages ).',
+        'Story': 'You make your way out of the Whispering Forest and return to the Village of Arion, Time to visit the Temple of Ages to find the last Sacred Relic. \n( type "south" to go to the Temple of Ages ).',
         'North': '', 
         'South': 'Temple of Ages Part 1', 
         'Image': 'images/village_of_arion_pt2.png',
         'Enemy': None
     },
     'Village of Arion Part 4': {
-        'Story': 'You make your way out of the Temple of Ages and return to the Village of Arion, Time to find Malakars Fortress and put and end to his reign of terror!, ( End of Demo, More to come in the future! ).',
+        'Story': 'You make your way out of the Temple of Ages and return to the Village of Arion, Time to find Malakars Fortress and put and end to his reign of terror!. \n( End of Demo, More to come in the future! ).',
         'North': '', 
         'South': '', 
         'Image': 'images/village_of_arion_pt2.png',
         'Enemy': None
     },
     'Temple of Ages Part 1': {
-        'Story': 'You find yourself in a desert, the barren land with mountainous sand dunes has a mysterious, desolate feel to it. In the distance you see what looks like a temple... (type "north" to continue to the Temple or "south" to return to the Village)',
+        'Story': 'You find yourself in a desert, the barren land with mountainous sand dunes has a mysterious, desolate feel to it. In the distance you see what looks like a temple... \n(type "north" to continue to the Temple or "south" to return to the Village)',
         'North': 'Temple of Ages Part 2',
         'South': 'The Village of Arion Part 3',
         'Image': 'images/temple_of_ages_pt1.png',
         'Enemy': None
     },
     'Temple of Ages Part 2': {
-        'Story': 'You approach the front gates of the Temple of Ages, at the foot of one of the pillars you see a bottle half buried in the sand and go over to pick it up ( type "pick up" to get the Health Elixir)',
+        'Story': 'You approach the front gates of the Temple of Ages, at the foot of one of the pillars you see a bottle half buried in the sand and go over to pick it up \n( type "pick up" to get the Health Elixir)',
         'Pick Up': 'Health Elixir',
         'Continue': 'Temple of Ages Part 3',
         'Image': 'images/temple_of_ages_pt2.png',
         'Enemy': None
     },
     'Temple of Ages Part 3': {
-        'Story': 'You walk through the large entrance into the Temple of Ages. As you walk into the great hall, you hear a clattering sound, as your turn to look you see a skeleton like figure walking towards you brandishing weapons! ( type "fight" to start the battle )',
+        'Story': 'You walk through the large entrance into the Temple of Ages. As you walk into the great hall, you hear a clattering sound, as your turn to look you see a skeleton like figure walking towards you brandishing weapons! \n( type "fight" to start the battle )',
         'Fight': 'start_fight()',
         'Enemy': 'Boneguard',
         'Continue': 'Temple of Ages Part 4',
         'Image': 'images/temple_of_ages_pt3.png',
     },
     'Temple of Ages Part 4': {
-        'Story': 'The Boneguard falls over and crumble into a pile of bones and dust. As the dust settles you see another Sacred Relic glinting between the pile of bones. You walk over and pick it up ( type "pick up" to pick up the relic)',
+        'Story': 'The Boneguard falls over and crumble into a pile of bones and dust. As the dust settles you see another Sacred Relic glinting between the pile of bones. You walk over and pick it up \n( type "pick up" to pick up the relic)',
         'North': '',
         'South': '',
         'Pick Up': 'Sacred Relic',
@@ -131,6 +131,8 @@ def make_game_window():
     '''Creates the PySimplueGUI game window'''
     sg.theme('Dark Blue 3')
 
+    font_style = ('Arial', 14)
+
     '''Get the image from the game_state location'''
     story, image = status.get_current_scene()
 
@@ -139,9 +141,9 @@ def make_game_window():
     ]
 
     right_column = [
-        [sg.Text(story, size=(60, 10), key='-OUTPUT-')],
-        [sg.Input(key='-IN-', size=(40, 1))],
-        [sg.Button('Submit'), sg.Button('Exit')]
+        [sg.Text(story, size=(60, 20), key='-OUTPUT-', font=font_style)],
+        [sg.Input(key='-IN-', size=(40, 1), font=font_style)],
+        [sg.Button('Submit', font=font_style), sg.Button('Exit', font=font_style)]
     ]
 
     '''Layout for game window'''
@@ -168,6 +170,8 @@ def main():
             window['-OUTPUT-'].update(output)
             if image:
                 window['-IMG-'].update(filename=image)
+            
+            window['-IN-'].update('')
 
     window.close()
 

@@ -30,7 +30,7 @@ class Inventory:
     def show_inventory(self):
         '''Display the current items in the player inventory'''
         if self.items:
-            return 'Inventory:\n' + '\n'.join([str(item) for item in self.items])
+            return 'Inventory:\n' + '\n'.join([str(item) for item in self.items]) + '\n Type "close" to return to scene'
         else:
             return 'Your inventory is empty.'
         
