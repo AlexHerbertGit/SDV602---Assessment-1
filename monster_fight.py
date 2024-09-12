@@ -35,7 +35,7 @@ class MonsterFight:
             fight_log.append(f'You hit the {self.enemy_type} for {player_attack} damage. Enemy health: {self.enemy_health}')
 
             if self.enemy_health <= 0:
-                fight_log.append(f'You have defeated the {self.enemy_type}!')
+                fight_log.append(f'You have defeated the {self.enemy_type}! (type "continue" to move on)')
                 self.in_fight = False
                 return '\n'.join(fight_log)
 

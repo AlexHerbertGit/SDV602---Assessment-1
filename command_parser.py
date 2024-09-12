@@ -43,6 +43,22 @@ class CommandParser:
             
         if self.fight.in_fight:
             return self.fight.fight_action(command), None
+        
+        if 'pick up' in command:
+            current_scene = game_places[self.status.get_state()]
+            if 'Pick Up' in current_scene:
+                item_name = current_scene['Pick Up']
+                new_item = Item(item_name, 1)
+                self.inventory.add_item(new_item)
+                return f'You picked up {item_name} and added it to your inventory. ( type "continue" to go carry on with your quest" )', None
+            else:
+                return 'There is nothing to pick up here'
+        
+        if 'continue' in command and 'Continue' in game_places[self.status.get_state()]:
+            next_scene = game_places[self.status.get_state()]['Continue']
+            self.status.update_state('Continue')
+            story, image = self.status.get_current_scene()
+            return story, image
 
         if 'inventory' in command:
             return self.inventory.show_inventory(), None
