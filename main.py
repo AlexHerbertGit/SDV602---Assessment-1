@@ -81,8 +81,8 @@ game_places = {
     },
     'Temple of Ages Part 1': {
         'Story': 'You find yourself in a desert, the barren land with mountainous sand dunes has a mysterious, desolate feel to it. In the distance you see what looks like a temple... \n(type "north" to continue to the Temple or "south" to return to the Village)',
-        'North': 'Temple of Ages Part 2',
-        'South': 'The Village of Arion Part 3',
+        'North': 'The Village of Arion Part 3',
+        'South': 'Temple of Ages Part 2',
         'Image': 'images/temple_of_ages_pt1.png',
         'Enemy': None
     },
